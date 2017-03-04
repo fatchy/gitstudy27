@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.UserAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.UserAddress" >
+    <id column="useraddresstb_id" property="useraddresstbId" jdbcType="INTEGER" />
+    <result column="usertb_id" property="usertbId" jdbcType="INTEGER" />
+    <result column="useraddresstb_address" property="useraddresstbAddress" jdbcType="VARCHAR" />
+    <result column="alternative1" property="alternative1" jdbcType="VARCHAR" />
+    <result column="alternative2" property="alternative2" jdbcType="VARCHAR" />
+    <result column="alternative3" property="alternative3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    useraddresstb_id, usertb_id, useraddresstb_address, alternative1, alternative2, alternative3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from useraddresstb
+    where useraddresstb_id = #{useraddresstbId,jdbcType=INTEGER}
+  </select>
+  	
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from useraddresstb
+    where usertb_id = #{usertbId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserTbKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from useraddresstb
+    where usertb_id = #{usertbId,jdbcType=INTEGER} and useraddresstb_address like &apos;H%&apos; order by useraddresstb_id desc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from useraddresstb
+    where useraddresstb_id = #{useraddresstbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.UserAddress" >
+    insert into useraddresstb (useraddresstb_id, usertb_id, useraddresstb_address, 
+      alternative1, alternative2, alternative3
+      )
+    values (#{useraddresstbId,jdbcType=INTEGER}, #{usertbId,jdbcType=INTEGER}, #{useraddresstbAddress,jdbcType=VARCHAR}, 
+      #{alternative1,jdbcType=VARCHAR}, #{alternative2,jdbcType=VARCHAR}, #{alternative3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.UserAddress" >
+    insert into useraddresstb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="useraddresstbId != null" >
+        useraddresstb_id,
+      </if>
+      <if test="usertbId != null" >
+        usertb_id,
+      </if>
+      <if test="useraddresstbAddress != null" >
+        useraddresstb_address,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="useraddresstbId != null" >
+        #{useraddresstbId,jdbcType=INTEGER},
+      </if>
+      <if test="usertbId != null" >
+        #{usertbId,jdbcType=INTEGER},
+      </if>
+      <if test="useraddresstbAddress != null" >
+        #{useraddresstbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.UserAddress" >
+    update useraddresstb
+    <set >
+      <if test="usertbId != null" >
+        usertb_id = #{usertbId,jdbcType=INTEGER},
+      </if>
+      <if test="useraddresstbAddress != null" >
+        useraddresstb_address = #{useraddresstbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        alternative1 = #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        alternative2 = #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        alternative3 = #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where useraddresstb_id = #{useraddresstbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.UserAddress" >
+    update useraddresstb
+    set usertb_id = #{usertbId,jdbcType=INTEGER},
+      useraddresstb_address = #{useraddresstbAddress,jdbcType=VARCHAR},
+      alternative1 = #{alternative1,jdbcType=VARCHAR},
+      alternative2 = #{alternative2,jdbcType=VARCHAR},
+      alternative3 = #{alternative3,jdbcType=VARCHAR}
+    where useraddresstb_id = #{useraddresstbId,jdbcType=INTEGER}
+  </update>
+</mapper>

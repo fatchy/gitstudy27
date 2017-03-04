@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.DetailInfoItemMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.DetailInfoItem" >
+    <id column="detailinfoitemtb_id" property="detailinfoitemtbId" jdbcType="INTEGER" />
+    <result column="detailinfoitemtb_name" property="detailinfoitemtbName" jdbcType="VARCHAR" />
+    <result column="alternative1" property="alternative1" jdbcType="VARCHAR" />
+    <result column="alternative2" property="alternative2" jdbcType="VARCHAR" />
+    <result column="alternative3" property="alternative3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    detailinfoitemtb_id, detailinfoitemtb_name, alternative1, alternative2, alternative3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from detailinfoitemtb
+    where detailinfoitemtb_id = #{detailinfoitemtbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from detailinfoitemtb
+    where detailinfoitemtb_id = #{detailinfoitemtbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.DetailInfoItem" >
+    insert into detailinfoitemtb (detailinfoitemtb_id, detailinfoitemtb_name, 
+      alternative1, alternative2, alternative3
+      )
+    values (#{detailinfoitemtbId,jdbcType=INTEGER}, #{detailinfoitemtbName,jdbcType=VARCHAR}, 
+      #{alternative1,jdbcType=VARCHAR}, #{alternative2,jdbcType=VARCHAR}, #{alternative3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.DetailInfoItem" >
+    insert into detailinfoitemtb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailinfoitemtbId != null" >
+        detailinfoitemtb_id,
+      </if>
+      <if test="detailinfoitemtbName != null" >
+        detailinfoitemtb_name,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailinfoitemtbId != null" >
+        #{detailinfoitemtbId,jdbcType=INTEGER},
+      </if>
+      <if test="detailinfoitemtbName != null" >
+        #{detailinfoitemtbName,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.DetailInfoItem" >
+    update detailinfoitemtb
+    <set >
+      <if test="detailinfoitemtbName != null" >
+        detailinfoitemtb_name = #{detailinfoitemtbName,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        alternative1 = #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        alternative2 = #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        alternative3 = #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where detailinfoitemtb_id = #{detailinfoitemtbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.DetailInfoItem" >
+    update detailinfoitemtb
+    set detailinfoitemtb_name = #{detailinfoitemtbName,jdbcType=VARCHAR},
+      alternative1 = #{alternative1,jdbcType=VARCHAR},
+      alternative2 = #{alternative2,jdbcType=VARCHAR},
+      alternative3 = #{alternative3,jdbcType=VARCHAR}
+    where detailinfoitemtb_id = #{detailinfoitemtbId,jdbcType=INTEGER}
+  </update>
+</mapper>

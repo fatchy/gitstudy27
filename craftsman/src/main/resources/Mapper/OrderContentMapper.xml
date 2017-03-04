@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.OrderContentMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.OrderContent" >
+    <id column="ordercontenttb_id" property="ordercontenttbId" jdbcType="INTEGER" />
+    <result column="ordertb_id" property="ordertbId" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ordercontenttb_id, ordertb_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ordercontenttb
+    where ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ordercontenttb
+    where ordertb_id = #{ordertbId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ordercontenttb
+    where ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.OrderContent" useGeneratedKeys="true" keyProperty="ordercontenttbId">
+    insert into ordercontenttb ( ordertb_id)
+    values (#{ordertbId})
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.OrderContent" >
+    insert into ordercontenttb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ordercontenttbId != null" >
+        ordercontenttb_id,
+      </if>
+      <if test="ordertbId != null" >
+        ordertb_id,
+      </if>
+   
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ordercontenttbId != null" >
+        #{ordercontenttbId,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbId != null" >
+        #{ordertbId,jdbcType=INTEGER},
+      </if>
+     
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.OrderContent" >
+    update ordercontenttb
+    <set >
+      <if test="ordertbId != null" >
+        ordertb_id = #{ordertbId,jdbcType=INTEGER},
+      </if>
+  
+    </set>
+    where ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.OrderContent" >
+    update ordercontenttb
+    set ordertb_id = #{ordertbId,jdbcType=INTEGER}
+    where ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.ReservationMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Reservation">
+		<id column="reservationtb_id" property="reservationtbId" jdbcType="INTEGER" />
+		<result column="reservationtb_date" property="reservationtbDate"
+			jdbcType="DATE" />
+		<result column="reservationtb_period" property="reservationtbPeriod"
+			jdbcType="INTEGER" />
+		<result column="ordertb_id" property="ordertbId" jdbcType="INTEGER" />
+		<result column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		reservationtb_id, reservationtb_date, reservationtb_period, ordertb_id, workertb_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from reservationtb
+		where reservationtb_id = #{reservationtbId,jdbcType=INTEGER}
+	</select>
+	<select id="selectByWorkerId" resultMap="BaseResultMap"
+		>
+		select
+		<include refid="Base_Column_List" />
+		from reservationtb
+		where workertb_id = #{0} and reservationtb_date=#{1} and reservationtb_period=#{2}
+	</select>
+	<select id="getReservations" parameterType="com.craftsman.ssm.entity.ReservationInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from reservationtb
+		where workertb_id = #{workerId} and reservationtb_date BETWEEN #{firstDate} AND #{lastDate} 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from reservationtb
+		where reservationtb_id = #{reservationtbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.Reservation">
+		insert into reservationtb (reservationtb_id, reservationtb_date,
+		reservationtb_period, ordertb_id, workertb_id
+		)
+		values (#{reservationtbId,jdbcType=INTEGER},
+		#{reservationtbDate,jdbcType=DATE},
+		#{reservationtbPeriod,jdbcType=INTEGER},
+		#{ordertbId,jdbcType=INTEGER}, #{workertbId,jdbcType=INTEGER},
+		
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.craftsman.ssm.entity.Reservation">
+		insert into reservationtb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="reservationtbId != null">
+				reservationtb_id,
+			</if>
+			<if test="reservationtbDate != null">
+				reservationtb_date,
+			</if>
+			<if test="reservationtbPeriod != null">
+				reservationtb_period,
+			</if>
+			<if test="ordertbId != null">
+				ordertb_id,
+			</if>
+			<if test="workertbId != null">
+				workertb_id,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="reservationtbId != null">
+				#{reservationtbId,jdbcType=INTEGER},
+			</if>
+			<if test="reservationtbDate != null">
+				#{reservationtbDate,jdbcType=DATE},
+			</if>
+			<if test="reservationtbPeriod != null">
+				#{reservationtbPeriod,jdbcType=INTEGER},
+			</if>
+			<if test="ordertbId != null">
+				#{ordertbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbId != null">
+				#{workertbId,jdbcType=INTEGER},
+			</if>
+		
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Reservation">
+		update reservationtb
+		<set>
+			<if test="reservationtbDate != null">
+				reservationtb_date = #{reservationtbDate,jdbcType=DATE},
+			</if>
+			<if test="reservationtbPeriod != null">
+				reservationtb_period = #{reservationtbPeriod,jdbcType=INTEGER},
+			</if>
+			<if test="ordertbId != null">
+				ordertb_id = #{ordertbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbId != null">
+				workertb_id = #{workertbId,jdbcType=INTEGER},
+			</if>
+			<if test="alternative1 != null">
+				alternative1 = #{alternative1,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative2 != null">
+				alternative2 = #{alternative2,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative3 != null">
+				alternative3 = #{alternative3,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where reservationtb_id = #{reservationtbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.Reservation">
+		update reservationtb
+		set reservationtb_date = #{reservationtbDate,jdbcType=DATE},
+		reservationtb_period = #{reservationtbPeriod,jdbcType=INTEGER},
+		ordertb_id = #{ordertbId,jdbcType=INTEGER},
+		workertb_id = #{workertbId,jdbcType=INTEGER},
+		alternative1 = #{alternative1,jdbcType=VARCHAR},
+		alternative2 = #{alternative2,jdbcType=VARCHAR},
+		alternative3 = #{alternative3,jdbcType=VARCHAR}
+		where reservationtb_id = #{reservationtbId,jdbcType=INTEGER}
+	</update>
+</mapper>

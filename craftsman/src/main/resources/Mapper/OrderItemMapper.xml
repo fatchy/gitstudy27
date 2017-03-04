@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.OrderItemMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.OrderItem" >
+    <id column="orderitemtb_id" property="orderitemtbId" jdbcType="INTEGER" />
+    <result column="ordercontenttb_id" property="ordercontenttbId" jdbcType="INTEGER" />
+    <result column="orderitemtb_name" property="orderitemtbName" jdbcType="VARCHAR" />
+    <result column="orderitemtb_content" property="orderitemtbContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    orderitemtb_id, ordercontenttb_id, orderitemtb_name, orderitemtb_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderitemtb
+    where orderitemtb_id = #{ordercontenttbId,jdbcType=INTEGER}
+  </select>
+    <select id="selectByCountId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderitemtb
+    where ordercontenttb_id = #{orderitemtbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderitemtb
+    where orderitemtb_id = #{orderitemtbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.OrderItem" useGeneratedKeys="true" keyProperty="orderitemtbId">
+    insert into orderitemtb (orderitemtb_id, ordercontenttb_id, 
+      orderitemtb_name, orderitemtb_content)
+    values (#{orderitemtbId,jdbcType=INTEGER}, #{ordercontenttbId,jdbcType=INTEGER}, 
+      #{orderitemtbName,jdbcType=VARCHAR}, #{orderitemtbContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.OrderItem"  useGeneratedKeys="true" keyProperty="orderitemtbId">
+    insert into orderitemtb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderitemtbId != null" >
+        orderitemtb_id,
+      </if>
+      <if test="ordercontenttbId != null" >
+        ordercontenttb_id,
+      </if>
+      <if test="orderitemtbName != null" >
+        orderitemtb_name,
+      </if>
+      <if test="orderitemtbContent != null" >
+        orderitemtb_content,
+      </if>
+    
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderitemtbId != null" >
+        #{orderitemtbId,jdbcType=INTEGER},
+      </if>
+      <if test="ordercontenttbId != null" >
+        #{ordercontenttbId,jdbcType=INTEGER},
+      </if>
+      <if test="orderitemtbName != null" >
+        #{orderitemtbName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderitemtbContent != null" >
+        #{orderitemtbContent,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.OrderItem" >
+    update orderitemtb
+    <set >
+      <if test="ordercontenttbId != null" >
+        ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER},
+      </if>
+      <if test="orderitemtbName != null" >
+        orderitemtb_name = #{orderitemtbName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderitemtbContent != null" >
+        orderitemtb_content = #{orderitemtbContent,jdbcType=VARCHAR},
+      </if>
+    
+    </set>
+    where orderitemtb_id = #{orderitemtbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.OrderItem" >
+    update orderitemtb
+    set ordercontenttb_id = #{ordercontenttbId,jdbcType=INTEGER},
+      orderitemtb_name = #{orderitemtbName,jdbcType=VARCHAR},
+      orderitemtb_content = #{orderitemtbContent,jdbcType=VARCHAR}
+    where orderitemtb_id = #{orderitemtbId,jdbcType=INTEGER}
+  </update>
+</mapper>

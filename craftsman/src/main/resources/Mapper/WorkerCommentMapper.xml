@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkerCommentMapper" >
+	<resultMap id="WorkerCommentMap" type="com.craftsman.ssm.entity.WorkerComment">
+		<id column="workercommenttb_id" property="workercommenttbId"/>
+		<result column="usertb_id" property="usertbId"/>
+		<result column="workertb_id" property="workertbId"/>
+		<result column="workercommenttb_content" property="workercommenttbContent"/>
+		<result column="workercommenttb_time" property="workercommenttbTime"/>
+		<result column="alternative1" property="alternative1"/>
+		<result column="alternative2" property="alternative2"/>
+		<result column="alternative3" property="alternative3"/>
+	</resultMap>
+	
+	<resultMap id="commentBeanMap" type="com.craftsman.ssm.bean.CommentBean">
+		<id column="workercommenttb_id" property="workercommenttbId"/>
+		<result column="workertb_id" property="workertbId"/>
+		<result column="ordertb_id" property="ordertbId"/>
+		<result column="workercommenttb_content" property="workercommenttbContent"/>
+		<result column="workercommenttb_time" property="workercommenttbTime"/>
+		<result column="alternative1" property="alternative1"/>
+		<result column="alternative2" property="alternative2"/>
+		<result column="alternative3" property="alternative3"/>
+		<association property="user" column="usertb_id" resultMap="com.craftsman.ssm.mapper.UserMapper.BaseResultMap"/>
+	</resultMap>
+	
+	<!-- 分页查询 -->
+	<select id="findPartComment" parameterType="com.craftsman.ssm.entity.Pagination" resultMap="commentBeanMap">
+		select w.workercommenttb_id,w.usertb_id,w.workertb_id,w.workercommenttb_content,w.workercommenttb_time,u.usertb_name,usertb_headpic from 
+		(select * from workercommenttb 
+		 <if test="queryStr!=null or queryStr='' ">
+		 where workertb_id=#{queryStr} 
+		 </if>
+		 order by workercommenttb_time desc)w join usertb u on w.usertb_id = u.usertb_id
+		
+		limit ${min},${rows}
+		
+		
+	</select>
+	<!-- 查询总的评论条数 -->
+	<select id="findCommentCount" parameterType="Pagination" resultType="int">
+		select count(*) from workercommenttb where workertb_id=#{queryStr}
+	</select>
+	<select id="findByOrderId" parameterType="WorkerComment" resultType="int">
+		select count(*) from workercommenttb where ordertb_id=#{ordertbId}
+	</select>
+	<insert id="addComment" parameterType="WorkerComment">
+		insert into workercommenttb (usertb_id,workertb_id,ordertb_id,workercommenttb_content,workercommenttb_time) values(#{usertbId},#{workertbId},#{ordertbId},#{workercommenttbContent},now())
+	</insert>
+</mapper>

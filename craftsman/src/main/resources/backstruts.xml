@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+
+	<!--解决乱码 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.objectFactory" value="spring" />
+	<package name="backmanage" extends="json-default">
+
+		<!-- 注意：这里的class部分不许写spring中配置的action的id名，因为这是，由spring来生成action对象 -->
+		<action name="*_admin" class="adminAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result type="json" name="jsonBean">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="tobackmain" type="redirect">
+				/nanhua/backmain.jsp
+			</result>
+			<result name="nologin" type="redirect">
+				/nologin.html
+			</result>
+			<result name="loginout">
+				/backlogin.html
+			</result>
+		</action>
+		<action name="*_user" class="userAction" method="{1}">
+			<result type="json">
+				<param name="root">userBean</param>
+			</result>
+			<result type="json" name="userBean">
+				<param name="root">userBean</param>
+			</result>
+			<result name="jsonBean" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="login" type="redirect">
+				/page/index.jsp
+			</result>
+			<result name="loginout" type="redirect">
+				/page/index.jsp
+			</result>
+			<result name="changePwdJson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_worker" class="workerAction" method="{1}">
+			<result type="json">
+				<param name="root">workerBean</param>
+			</result>
+			<result type="json" name="searchResult">
+				<param name="root">workerBean</param>
+			</result>
+			<result type="json" name="getWorkerInfo">
+				<param name="root">jsonBean</param>
+			</result>
+			<result type="json" name="jsonBean">
+				<param name="root">jsonBean</param>
+			</result>
+			<result type="json" name="submitSearchInfo">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_workertype" class="workerTypeAction" method="{1}">
+			<result type="json" name="workerTypeBean">
+				<param name="root">workerTypeBean</param>
+			</result>
+			<result type="json" name="jsonBean">
+				<param name="root">jsonBean</param>
+			</result>
+			<result type="json" name="paginationBean">
+				<param name="root">paginationBean</param>
+			</result>
+			<result type="json" name="typejson">
+				<param name="root">workerTypes</param>
+			</result>
+		</action>
+		<action name="*_article" class="articleAction" method="{1}">
+			<result name="articlesBean" type="json">
+				<param name="root">articlesBean</param>
+			</result>
+			<result name="jsonBean" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="success" type="plainText">  
+                <!-- 该name="success"的result必须有 -->  
+                <param name="charSet">UTF-8</param>  
+                <!-- 设置输出字符编码，防止英文和数字以外的字符(如中文)出现乱码  -->  
+                <param name="location">/page/testout.jsp</param>  
+                <!-- 设置依附的本地文件，该文件必须实际存在,且路径指向正确;但该文件内容可以为空,仅起本地依附作用-->  
+            </result> 
+            <result name="getAllArticle" type="json">
+				<param name="root">articlesBean</param>
+			</result>
+
+		</action>
+		<action name="to_*" class="redirectAction" method="{1}">
+			<result name="index" type="redirect">
+				/page/index.jsp
+			</result>
+			<result name="login" type="redirect">
+				/login.html
+			</result>
+			<result name="tocraftsManOrder" type="redirect">
+				/page/craftsManOrder.jsp
+			</result>
+			<result name="toPayMoney" type="redirect">
+				/page/paymoney.html
+			</result>
+			<result name="tobespeakOrder" type="redirect">
+				/page/bespeakOrder.jsp
+			</result>
+			<result name="tolaborComment" type="redirect">
+				/page/laborComment.jsp
+			</result>
+			<result name="laborlist" type="redirect">
+				/page/laborlist.jsp
+			</result>
+		</action>
+		<action name="*_upload" class="uploadAction" method="{1}">
+			<result name="jsonBean" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_orderback" class="orderActionBack" method="{1}">
+			<result name="paginationBean" type="json">
+				<param name="root">paginationBean</param>
+			</result>
+			<result name="orderDetailBean" type="json">
+				<param name="root">orderDetailBean</param>
+			</result>
+			<result name="jsonBean" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+
+
+		</action>
+		<action name="*_workerPrice" class="workerPriceAction" method="{1}">
+
+			<result name="findAllService" type="json">
+				<param name="root">list</param>
+			</result>
+
+		</action>
+
+		<action name="*_workerPriceback" class="workerPriceActionBack"
+			method="{1}">
+
+			<result name="paginationBean" type="json">
+				<param name="root">paginationBean</param>
+			</result>
+			<result name="jsonBean" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+
+		</action>
+
+		<action name="*_order" class="orderAction" method="{1}">
+			<result name="tocraftsManOrder" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="userOder" type="json">
+				<param name="root">showOrdersBean</param>
+			</result>
+		</action>
+		
+		<action name="*_determineOrderItem" class="determineOrderItemAction"
+			method="{1}">
+			<result name="success" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_determineOrder" class="determineOrderAction"
+			method="{1}">
+			<result name="toPayMoney" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_citySelect" class="citySelectAction" method="{1}">
+			<result name="districtjson" type="json">
+				<param name="root">cityList</param>
+			</result>
+			<result name="streetjson" type="json">
+				<param name="root">streets</param>
+			</result>
+		</action>
+		<action name="*_reservation" class="reservationAction" method="{1}">
+			<result type="json" name="getReservationSchedule">
+				<param name="root">reservations</param>
+			</result>
+		</action>
+		<action name="*_appointmen" class="appointmentAction" method="{1}">
+			<result name="tosubmitAppointment" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="*_userInfo" class="userInfoChangeAction" method="{1}">
+			<result name="changeInfoJson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="userAddressJson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+
+
+	</package>
+
+
+</struts>
+
+
+
+
+

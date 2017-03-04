@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkerCaseMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.WorkerCase" >
+    <id column="workercasetb_id" property="workercasetbId" jdbcType="INTEGER" />
+    <result column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+    <result column="workercasetb_name" property="workercasetbName" jdbcType="VARCHAR" />
+    <result column="workertypetb_summary" property="workertypetbSummary" jdbcType="VARCHAR" />
+    <result column="workertypetb_pic" property="workertypetbPic" jdbcType="VARCHAR" />
+    <result column="alternative1" property="alternative1" jdbcType="VARCHAR" />
+    <result column="alternative2" property="alternative2" jdbcType="VARCHAR" />
+    <result column="alternative3" property="alternative3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    workercasetb_id, workertb_id, workercasetb_name, workertypetb_summary, workertypetb_pic, 
+    alternative1, alternative2, alternative3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from workercasetb
+    where workercasetb_id = #{workercasetbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workercasetb
+    where workercasetb_id = #{workercasetbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.WorkerCase" >
+    insert into workercasetb (workercasetb_id, workertb_id, workercasetb_name, 
+      workertypetb_summary, workertypetb_pic, alternative1, 
+      alternative2, alternative3)
+    values (#{workercasetbId,jdbcType=INTEGER}, #{workertbId,jdbcType=INTEGER}, #{workercasetbName,jdbcType=VARCHAR}, 
+      #{workertypetbSummary,jdbcType=VARCHAR}, #{workertypetbPic,jdbcType=VARCHAR}, #{alternative1,jdbcType=VARCHAR}, 
+      #{alternative2,jdbcType=VARCHAR}, #{alternative3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.WorkerCase" >
+    insert into workercasetb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workercasetbId != null" >
+        workercasetb_id,
+      </if>
+      <if test="workertbId != null" >
+        workertb_id,
+      </if>
+      <if test="workercasetbName != null" >
+        workercasetb_name,
+      </if>
+      <if test="workertypetbSummary != null" >
+        workertypetb_summary,
+      </if>
+      <if test="workertypetbPic != null" >
+        workertypetb_pic,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workercasetbId != null" >
+        #{workercasetbId,jdbcType=INTEGER},
+      </if>
+      <if test="workertbId != null" >
+        #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workercasetbName != null" >
+        #{workercasetbName,jdbcType=VARCHAR},
+      </if>
+      <if test="workertypetbSummary != null" >
+        #{workertypetbSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="workertypetbPic != null" >
+        #{workertypetbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.WorkerCase" >
+    update workercasetb
+    <set >
+      <if test="workertbId != null" >
+        workertb_id = #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workercasetbName != null" >
+        workercasetb_name = #{workercasetbName,jdbcType=VARCHAR},
+      </if>
+      <if test="workertypetbSummary != null" >
+        workertypetb_summary = #{workertypetbSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="workertypetbPic != null" >
+        workertypetb_pic = #{workertypetbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        alternative1 = #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        alternative2 = #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        alternative3 = #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where workercasetb_id = #{workercasetbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.WorkerCase" >
+    update workercasetb
+    set workertb_id = #{workertbId,jdbcType=INTEGER},
+      workercasetb_name = #{workercasetbName,jdbcType=VARCHAR},
+      workertypetb_summary = #{workertypetbSummary,jdbcType=VARCHAR},
+      workertypetb_pic = #{workertypetbPic,jdbcType=VARCHAR},
+      alternative1 = #{alternative1,jdbcType=VARCHAR},
+      alternative2 = #{alternative2,jdbcType=VARCHAR},
+      alternative3 = #{alternative3,jdbcType=VARCHAR}
+    where workercasetb_id = #{workercasetbId,jdbcType=INTEGER}
+  </update>
+</mapper>

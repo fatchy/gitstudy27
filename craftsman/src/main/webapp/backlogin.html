@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="application/x-javascript">
+		
+		
+		
+		
+		
+		 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+	
+	
+	
+	
+	
+	</script>
+
+
+	<link href="css/login/backlogin.css" rel='stylesheet' type='text/css' />
+
+	<script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		$(document).ready(function(c) {
+			$('.close').on('click', function(c) {
+				$('.login-form').fadeOut('slow', function(c) {
+					$('.login-form').remove();
+				});
+			});
+		});
+	</script>
+
+	<h1>手艺人后台管理</h1>
+	<div class="login-form">
+		<div class="close"></div>
+		<div class="head-info">
+			<label class="lbl-1"> </label> <label class="lbl-2"> </label> <label
+				class="lbl-3"> </label>
+		</div>
+		<div class="clear"></div>
+		<div class="avtar">
+			<img src="images/backlogin/lufei.png" />
+		</div>
+		<form action="login_admin.action">
+			<input id="adminname" type="text" name="admintbName" class="text"
+				value="Username" onFocus="this.value = '';"
+				onBlur="if (this.value == '') {this.value = 'Username';}">
+				<div class="key">
+					<input id="password" name="admintbPassword" type="password"
+						value="Password" onFocus="this.value = '';"
+						onBlur="if (this.value == '') {this.value = 'Password';}">
+				</div>
+		</form>
+		<div class="signin">
+			<input type="submit" onclick="loginBtn()" value="Login">
+		</div>
+	</div>
+	<div class="copy-rights">
+		<p>
+			Copyright &copy; 2015.Company name All rights reserved.<a
+				target="_blank" href="">麦浩斯</a>
+		</p>
+	</div>
+
+</body>
+<script>
+	function loginBtn() {
+		var name = $("#adminname").val();
+		var password = $("#password").val();
+		$.getJSON("login_admin.action", {
+			admintbName : name,
+			admintbPassword : password
+		}, function(data) {
+			if (data.code == 1) {
+				window.location.href = "tobackmain_admin.action";
+			} else {
+				alert("账号或密码错误");
+			}
+		});
+	}
+</script>
+</html>

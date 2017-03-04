@@ -1,0 +1,6 @@
+.media-position{position: relative;}
+.replay-bottom{position: absolute;bottom:0px; margin-top: 40px;}
+.replay-bottom > a{ margin-right:10px;}
+.replay-bottom > a:hover{cursor:pointer;}
+.heart-span{position: absolute;right:0px;bottom:0px;color:red;}
+.replay-bottom  .sub-replay-bottom{ left:200px;}

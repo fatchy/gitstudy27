@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.AdminMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Admin">
+		<id column="admintb_id" property="admintbId" jdbcType="INTEGER" />
+		<result column="admintb_name" property="admintbName" jdbcType="VARCHAR" />
+		<result column="admintb_password" property="admintbPassword"
+			jdbcType="VARCHAR" />
+		<result column="admintb_level" property="admintbLevel"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		admintb_id, admintb_name, admintb_password, admintb_level
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from admintb
+		where admintb_id = #{admintbId,jdbcType=INTEGER}
+	</select>
+	<select id="getAdminByAdmin" resultMap="BaseResultMap"
+		parameterType="Admin">
+		select
+		<include refid="Base_Column_List" />
+		from admintb
+		where admintb_name= #{admintbName,jdbcType=VARCHAR}
+		and
+		admintb_password= #{admintbPassword,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		admintb
+		where admintb_id = #{admintbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.Admin">
+		insert into admintb
+		(admintb_id, admintb_name, admintb_password,
+		admintb_level)
+		values
+		(#{admintbId,jdbcType=INTEGER}, #{admintbName,jdbcType=VARCHAR},
+		#{admintbPassword,jdbcType=VARCHAR},
+		#{admintbLevel,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.craftsman.ssm.entity.Admin">
+		insert into admintb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="admintbId != null">
+				admintb_id,
+			</if>
+			<if test="admintbName != null">
+				admintb_name,
+			</if>
+			<if test="admintbPassword != null">
+				admintb_password,
+			</if>
+			<if test="admintbLevel != null">
+				admintb_level,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="admintbId != null">
+				#{admintbId,jdbcType=INTEGER},
+			</if>
+			<if test="admintbName != null">
+				#{admintbName,jdbcType=VARCHAR},
+			</if>
+			<if test="admintbPassword != null">
+				#{admintbPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="admintbLevel != null">
+				#{admintbLevel,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Admin">
+		update admintb
+		<set>
+			<if test="admintbName != null">
+				admintb_name = #{admintbName,jdbcType=VARCHAR},
+			</if>
+			<if test="admintbPassword != null">
+				admintb_password = #{admintbPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="admintbLevel != null">
+				admintb_level = #{admintbLevel,jdbcType=INTEGER},
+			</if>
+		</set>
+		where admintb_id = #{admintbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.Admin">
+		update admintb
+		set
+		admintb_name = #{admintbName,jdbcType=VARCHAR},
+		admintb_password =
+		#{admintbPassword,jdbcType=VARCHAR},
+		admintb_level =
+		#{admintbLevel,jdbcType=INTEGER}
+		where admintb_id =
+		#{admintbId,jdbcType=INTEGER}
+	</update>
+</mapper>

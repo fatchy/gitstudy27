@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.objectFactory" value="spring" />
+	<package name="default" namespace="/" extends="json-default">
+
+		<!-- 注意：这里的class部分不许写spring中配置的action的id名，因为这是，由spring来生成action对象 -->
+		
+		<action name="workerComment_*" class="workerCommentAction" method="{1}">
+			<result name="commentjson" type="json">
+				<param name="root">workerCommentBean</param>
+			</result>
+			<result name="addcommentjson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+			<result name="checkjson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		<action name="worker_type" class="workerTypeAction" method="type">
+			<result name="typejson" type="json">
+				<param name="root">workerTypes</param>
+			</result>
+		</action>
+		<action name="order" class="orderAction" method="order">
+			<result name="orderjson" type="json">
+				<param name="root">jsonBean</param>
+			</result>
+		</action>
+		
+	</package>
+
+
+
+</struts>
+

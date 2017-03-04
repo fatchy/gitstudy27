@@ -1,0 +1,17 @@
+
+/*导航登陆*/
+.thumbnail .carousel-caption  p{display:none;}
+
+.thumbnail{position: relative;}
+
+.carousel-caption{background-color: #797C80; width: 100%;position: absolute;left: 0;bottom: 0; opacity: 0.8;}
+.carousel-caption h4,.carousel-caption p{color: #fff;}
+.color{
+	color:#aaa;
+}
+.img-circle1{
+	margin-top: 20px;
+	height: 140px;
+	width: 135px;
+	margin-left: 22px;
+}

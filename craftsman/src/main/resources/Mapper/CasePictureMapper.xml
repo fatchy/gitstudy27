@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.CasePictureMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.CasePicture" >
+    <id column="casepicturetb_id" property="casepicturetbId" jdbcType="INTEGER" />
+    <result column="workercasetb_id" property="workercasetbId" jdbcType="INTEGER" />
+    <result column="casepicturetb_pic" property="casepicturetbPic" jdbcType="VARCHAR" />
+    <result column="alternative1" property="alternative1" jdbcType="VARCHAR" />
+    <result column="alternative2" property="alternative2" jdbcType="VARCHAR" />
+    <result column="alternative3" property="alternative3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    casepicturetb_id, workercasetb_id, casepicturetb_pic, alternative1, alternative2, 
+    alternative3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from casepicturetb
+    where casepicturetb_id = #{casepicturetbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from casepicturetb
+    where casepicturetb_id = #{casepicturetbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.CasePicture" >
+    insert into casepicturetb (casepicturetb_id, workercasetb_id, 
+      casepicturetb_pic, alternative1, alternative2, 
+      alternative3)
+    values (#{casepicturetbId,jdbcType=INTEGER}, #{workercasetbId,jdbcType=INTEGER}, 
+      #{casepicturetbPic,jdbcType=VARCHAR}, #{alternative1,jdbcType=VARCHAR}, #{alternative2,jdbcType=VARCHAR}, 
+      #{alternative3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.CasePicture" >
+    insert into casepicturetb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="casepicturetbId != null" >
+        casepicturetb_id,
+      </if>
+      <if test="workercasetbId != null" >
+        workercasetb_id,
+      </if>
+      <if test="casepicturetbPic != null" >
+        casepicturetb_pic,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="casepicturetbId != null" >
+        #{casepicturetbId,jdbcType=INTEGER},
+      </if>
+      <if test="workercasetbId != null" >
+        #{workercasetbId,jdbcType=INTEGER},
+      </if>
+      <if test="casepicturetbPic != null" >
+        #{casepicturetbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.CasePicture" >
+    update casepicturetb
+    <set >
+      <if test="workercasetbId != null" >
+        workercasetb_id = #{workercasetbId,jdbcType=INTEGER},
+      </if>
+      <if test="casepicturetbPic != null" >
+        casepicturetb_pic = #{casepicturetbPic,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        alternative1 = #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        alternative2 = #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        alternative3 = #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where casepicturetb_id = #{casepicturetbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.CasePicture" >
+    update casepicturetb
+    set workercasetb_id = #{workercasetbId,jdbcType=INTEGER},
+      casepicturetb_pic = #{casepicturetbPic,jdbcType=VARCHAR},
+      alternative1 = #{alternative1,jdbcType=VARCHAR},
+      alternative2 = #{alternative2,jdbcType=VARCHAR},
+      alternative3 = #{alternative3,jdbcType=VARCHAR}
+    where casepicturetb_id = #{casepicturetbId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+         http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 在xml配置了这个标签后，spring可以自动去扫描base-pack下面或者子包下面的java文件，如果扫描到有@Component 
+		@Controller@Service等这些注解的类，则把这些类注册为bean 注意：如果配置了<context:component-scan>那么<context:annotation-config/>标签就可以不用再xml中配置了，因为前者包含了后者。另外<context:annotation-config/>还提供了两个子标签 -->
+	<context:component-scan base-package="com.craftsman.ssm" />
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 配置dbcp数据源... 数据库联接池 ( jndi-> tomcat的数据库联接池 ) / c3p0 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!--下面使针对mybatis的整合配置 1.sqlsessionfactory -->
+	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="typeAliasesPackage" value="com.craftsman.ssm.entity" />
+		<!-- setmapperLocation -->
+		<property name="mapperLocations" value="classpath:Mapper/*Mapper.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.craftsman.ssm.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="SqlSessionFactory" />
+	</bean>
+	
+	<!-- spring事务管理 -->
+	<!-- spring事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 申明式事务配置 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

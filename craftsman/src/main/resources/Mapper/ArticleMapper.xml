@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.ArticleMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Article">
+		<id column="articletb_id" property="articletbId" jdbcType="INTEGER" />
+		<result column="articletb_type" property="articletbType"
+			jdbcType="INTEGER" />
+		<result column="articletb_author" property="articletbAuthor"
+			jdbcType="VARCHAR" />
+		<result column="articletb_time" property="articletbTime"
+			jdbcType="TIMESTAMP" />
+		<result column="articletb_title" property="articletbTitle"
+			jdbcType="VARCHAR" />
+		<result column="articletb_path" property="articletbPath"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.craftsman.ssm.entity.Article"
+		extends="BaseResultMap">
+		<result column="articletb_content" property="articletbContent"
+			jdbcType="LONGVARBINARY" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		articletb_id, articletb_type, articletb_author,
+		articletb_time, articletb_title,
+		articletb_path
+	</sql>
+	<sql id="Blob_Column_List">
+		articletb_content
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from articletb
+		where articletb_id = #{articletbId,jdbcType=INTEGER}
+	</select>
+	<select id="findArticleByPage" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from articletb where 1=1
+		<if test="queryStr!=null">and (articletb_type like '%${queryStr}%' or
+			articletb_author like '%${queryStr}%' or articletb_title like
+			'%${queryStr}%'  ) </if>
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+
+	</select>
+	<select id="getCount" resultType="int">
+		select count(*) from articletb
+
+
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		articletb
+		where articletb_id = #{articletbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.Article">
+		insert into articletb
+		(articletb_id, articletb_type, articletb_author,
+		articletb_time,
+		articletb_title, articletb_path,
+		articletb_content)
+		values
+		(#{articletbId,jdbcType=INTEGER}, #{articletbType,jdbcType=INTEGER},
+		#{articletbAuthor,jdbcType=VARCHAR},
+		#{articletbTime,jdbcType=TIMESTAMP},
+		#{articletbTitle,jdbcType=VARCHAR}, #{articletbPath,jdbcType=VARCHAR},
+		#{articletbContent,jdbcType=LONGVARBINARY})
+	</insert>
+	<insert id="insertSelective" parameterType="com.craftsman.ssm.entity.Article">
+		insert into articletb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="articletbId != null">
+				articletb_id,
+			</if>
+			<if test="articletbType != null">
+				articletb_type,
+			</if>
+			<if test="articletbAuthor != null">
+				articletb_author,
+			</if>
+
+			articletb_time,
+
+			<if test="articletbTitle != null">
+				articletb_title,
+			</if>
+			<if test="articletbPath != null">
+				articletb_path,
+			</if>
+			<if test="articletbContent != null">
+				articletb_content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="articletbId != null">
+				#{articletbId,jdbcType=INTEGER},
+			</if>
+			<if test="articletbType != null">
+				#{articletbType,jdbcType=INTEGER},
+			</if>
+			<if test="articletbAuthor != null">
+				#{articletbAuthor,jdbcType=VARCHAR},
+			</if>
+
+			now(),
+
+			<if test="articletbTitle != null">
+				#{articletbTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="articletbPath != null">
+				#{articletbPath,jdbcType=VARCHAR},
+			</if>
+			<if test="articletbContent != null">
+				#{articletbContent,jdbcType=LONGVARBINARY},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Article">
+		update articletb
+		<set>
+			<if test="articletbType != null">
+				articletb_type = #{articletbType,jdbcType=INTEGER},
+			</if>
+			<if test="articletbAuthor != null">
+				articletb_author = #{articletbAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="articletbTime != null">
+				articletb_time = #{articletbTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articletbTitle != null">
+				articletb_title = #{articletbTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="articletbPath != null">
+				articletb_path = #{articletbPath,jdbcType=VARCHAR},
+			</if>
+			<if test="articletbContent != null">
+				articletb_content =
+				#{articletbContent,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		where articletb_id = #{articletbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.craftsman.ssm.entity.Article">
+		update
+		articletb
+		set articletb_type = #{articletbType,jdbcType=INTEGER},
+		articletb_author = #{articletbAuthor,jdbcType=VARCHAR},
+		articletb_time
+		= #{articletbTime,jdbcType=TIMESTAMP},
+		articletb_title =
+		#{articletbTitle,jdbcType=VARCHAR},
+		articletb_path =
+		#{articletbPath,jdbcType=VARCHAR},
+		articletb_content =
+		#{articletbContent,jdbcType=LONGVARBINARY}
+		where articletb_id =
+		#{articletbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.Article">
+		update articletb
+		set articletb_type = #{articletbType,jdbcType=INTEGER},
+		articletb_author = #{articletbAuthor,jdbcType=VARCHAR},
+		articletb_time
+		= #{articletbTime,jdbcType=TIMESTAMP},
+		articletb_title =
+		#{articletbTitle,jdbcType=VARCHAR},
+		articletb_path =
+		#{articletbPath,jdbcType=VARCHAR}
+		where articletb_id =
+		#{articletbId,jdbcType=INTEGER}
+	</update>
+</mapper>

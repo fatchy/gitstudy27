@@ -1,0 +1,39 @@
+@charset "UTF-8";
+.userpage-content{background-color: #EDEFF0;padding-top: 30px;}
+
+#usersNavLi > li >a{border-radius: 0 !important; font-size: 18px;}
+#usersNavLi  li a{width: 100%;color: #fff;background-color: #FF7900;}
+#usersNavLi > li.active > a:focus,#usersNavLi  >li >a:hover,#usersNavLi  >li.active >a:hover{background-color:#FFA800 ;}
+#usersNavLi > li.active > a{background-color:#F1D43A ;}
+
+
+.userpage-form{background-color: #fff; padding-top: 10px;}
+.userpage-form .table > tbody > tr > th,.userpage-form .table > tbody > tr > td{border-top: 0px;}
+
+.userpage-form .table > tbody > tr>td >a.userpage-button{width: 20%; text-align: center;}
+
+.userpage-form .table > tbody > tr>td{position: relative;}
+
+
+.userpage-form .table > tbody > tr>td>a:hover{opacity: 0.5;}	
+
+img.usercenter-img{ width:100px !important; height:100px !important;}
+
+/*订单显示样式*/
+#allOrder > .table-responsive.userOrderTable{margin-top:20px !important;}
+.mediaWidth{width:50% !important; }
+
+.orderTableTr{vertical-align:middle !important;}
+
+.trBackColor{background-color: #f5f5f5 !important;}
+
+/*用户的信息显示 下拉select*/
+.usercenter-select{ height:30px ;width:90px !important;}
+.usercenter-addButton{ height:30px !important ;}
+
+/*修改密码的表单验证*/
+.error-input{border-color:red !important;}
+.right-input{border-color:green !important;}
+.error-label{color:red !important;}
+.right-label{color:green !important;}
+

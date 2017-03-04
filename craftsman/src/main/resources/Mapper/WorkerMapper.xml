@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkerMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Worker">
+		<id column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+		<result column="workertb_name" property="workertbName"
+			jdbcType="VARCHAR" />
+		<result column="workertypetb_sex" property="workertypetbSex"
+			jdbcType="CHAR" />
+		<result column="workertb_scop" property="workertbScop"
+			jdbcType="VARCHAR" />
+		<result column="workertb_cadress" property="workertbCadress"
+			jdbcType="VARCHAR" />
+		<result column="workertb_extime" property="workertbExtime"
+			jdbcType="INTEGER" />
+		<result column="workertypetb_level" property="workertypetbLevel"
+			jdbcType="INTEGER" />
+		<result column="workertb_cellphone" property="workertbCellphone"
+			jdbcType="VARCHAR" />
+		<result column="workertypetb_id" property="workertypetbId"
+			jdbcType="INTEGER" />
+		<result column="workertb_secondphone" property="workertbSecondphone"
+			jdbcType="VARCHAR" />
+		<result column="workertb_summary" property="workertbSummary"
+			jdbcType="VARCHAR" />
+		<result column="workertb_photo" property="workertbPhoto"
+			jdbcType="VARCHAR" />
+		<result column="workertypetb_id" property="workertypetbId"
+			jdbcType="INTEGER" />
+		<result column="workertypetb_name" property="workertypetbName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		workertb_id, workertb_name, workertypetb_sex,
+		workertb_scop, workertb_cadress,
+		workertb_extime,
+		workertypetb_level,
+		workertb_cellphone, workertypetb_id, workertb_secondphone,
+		workertb_summary,
+		workertypetb_id,
+		workertypetb_name
+	</sql>
+	<select id="getCount" resultType="int">
+		select count(*) from workertb
+	</select>
+	<select id="selectByWorkertbId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		*
+		from workertb
+		where workertb_id = #{workertbId,jdbcType=INTEGER}
+	</select>
+
+	<select id="listWorker" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		*
+		from workertb ta left join workertypetb tb on
+		ta.workertypetb_id=tb.workertypetb_id where 1=1
+		<if test="queryStr!=null">and (workertb_cadress like '%${queryStr}%' or
+			workertb_name like '%${queryStr}%' or workertypetb_name like
+			'%${queryStr}%' or workertb_scop like
+			'%${queryStr}%' ) </if>
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+	</select>
+	<!-- 根据工人类型来查找工人 -->
+	<select id="findWorkerByWorkerType" parameterType="WorkerType"
+		resultMap="BaseResultMap">
+		select * from workertb where
+		workertypetb_id=#{workertypetbId}
+	</select>
+	<!-- 根据工人id来查找工人 -->
+  <select id="getWorkerInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  		select * from workertb where workertb_id=#{workerId}
+  </select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		workertb
+		where workertb_id = #{workertbId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入工人 -->
+	<insert id="insertSelective" parameterType="Worker">
+		insert into workertb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="workertbId != null">
+				workertb_id,
+			</if>
+			<if test="workertbName != null">
+				workertb_name,
+			</if>
+			<if test="workertypetbSex != null">
+				workertypetb_sex,
+			</if>
+			<if test="workertbScop != null">
+				workertb_scop,
+			</if>
+			<if test="workertbCadress != null">
+				workertb_cadress,
+			</if>
+			<if test="workertbExtime != null">
+				workertb_extime,
+			</if>
+			<if test="workertypetbLevel != null">
+				workertypetb_level,
+			</if>
+			<if test="workertbCellphone != null">
+				workertb_cellphone,
+			</if>
+			<if test="workertypetbId != null">
+				workertypetb_id,
+			</if>
+			<if test="workertbSecondphone != null">
+				workertb_secondphone,
+			</if>
+			<if test="workertbSummary != null">
+				workertb_summary,
+			</if>
+			<if test="workertbPhoto != null">
+				workertb_photo,
+			</if>
+			<if test="workertbAddtime != null">
+				workertb_addtime,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="workertbId != null">
+				#{workertbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbName != null">
+				#{workertbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbSex != null">
+				#{workertypetbSex,jdbcType=CHAR},
+			</if>
+			<if test="workertbScop != null">
+				#{workertbScop,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbCadress != null">
+				#{workertbCadress,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbExtime != null">
+				#{workertbExtime,jdbcType=INTEGER},
+			</if>
+			<if test="workertypetbLevel != null">
+				#{workertypetbLevel,jdbcType=INTEGER},
+			</if>
+			<if test="workertbCellphone != null">
+				#{workertbCellphone,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbId != null">
+				#{workertypetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbSecondphone != null">
+				#{workertbSecondphone,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbSummary != null">
+				#{workertbSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbPhoto != null">
+				#{workertbPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbAddtime != null">
+				#{workertbAddtime,jdbcType=TIMESTAMP},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Worker">
+		update workertb
+		<set>
+			<if test="workertbName != null">
+				workertb_name = #{workertbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbSex != null">
+				workertypetb_sex = #{workertypetbSex,jdbcType=CHAR},
+			</if>
+			<if test="workertbScop != null">
+				workertb_scop = #{workertbScop,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbCadress != null">
+				workertb_cadress = #{workertbCadress,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbExtime != null">
+				workertb_extime = #{workertbExtime,jdbcType=INTEGER},
+			</if>
+			<if test="workertypetbLevel != null">
+				workertypetb_level = #{workertypetbLevel,jdbcType=INTEGER},
+			</if>
+			<if test="workertbCellphone != null">
+				workertb_cellphone = #{workertbCellphone,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbId != null">
+				workertypetb_id = #{workertypetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbSecondphone != null">
+				workertb_secondphone = #{workertbSecondphone,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbSummary != null">
+				workertb_summary = #{workertbSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbPhoto != null">
+				workertb_photo = #{workertbPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="workertbAddtime != null">
+				workertb_addtime = #{workertbAddtime,jdbcType=TIMESTAMP},
+			</if>
+
+		</set>
+		where workertb_id = #{workertbId,jdbcType=INTEGER}
+	</update>
+
+</mapper>

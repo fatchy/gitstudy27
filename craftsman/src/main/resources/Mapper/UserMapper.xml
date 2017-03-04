@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.User">
+		<id column="usertb_id" property="usertbId" jdbcType="INTEGER" />
+		<result column="usertb_name" property="usertbName" jdbcType="VARCHAR" />
+		<result column="usertb_password" property="usertbPassword"
+			jdbcType="VARCHAR" />
+		<result column="usertb_cellphone" property="usertbCellphone"
+			jdbcType="VARCHAR" />
+		<result column="usertb_qq" property="usertbQq" jdbcType="VARCHAR" />
+		<result column="usertb_weixin" property="usertbWeixin"
+			jdbcType="VARCHAR" />
+		<result column="usertb_email" property="usertbEmail" jdbcType="VARCHAR" />
+		<result column="usertb_headpic" property="usertbHeadpic"
+			jdbcType="VARCHAR" />
+		<result column="usertb_sex" property="usertbSex" jdbcType="CHAR" />
+		<result column="usertb_status" property="usertbStatus"
+			jdbcType="INTEGER" />
+		<result column="usertb_regtime" property="usertbRegtime"
+			jdbcType="TIMESTAMP" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		usertb_id, usertb_name, usertb_password, usertb_cellphone,
+		usertb_qq,
+		usertb_weixin,
+		usertb_email,
+		usertb_headpic,usertb_sex,usertb_status, usertb_regtime
+	</sql>
+	<select id="getCount" resultType="int">
+		select count(*) from usertb
+	</select>
+	<select id="listUser" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from usertb
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+	</select>
+
+	<select id="findUserByUser" resultMap="BaseResultMap"
+		parameterType="User">
+		select
+		<include refid="Base_Column_List" />
+		from usertb
+		where 1=1
+		<if test="usertbName != null ">
+			and usertb_name=#{usertbName}
+		</if>
+		<if test="usertbEmail != null">
+			and usertb_email=#{usertbEmail}
+		</if>
+
+		<if test="usertbPassword != null">
+			and usertb_password=#{usertbPassword}
+		</if>
+	</select>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.User" >
+    insert into usertb (usertb_id, usertb_name, usertb_password, 
+      usertb_cellphone, usertb_qq, usertb_weixin, 
+      usertb_email, usertb_headpic, usertb_sex, 
+      usertb_status, usertb_regtime, alternative1, 
+      alternative2, alternative3)
+    values (#{usertbId,jdbcType=INTEGER}, #{usertbName,jdbcType=VARCHAR}, #{usertbPassword,jdbcType=VARCHAR}, 
+      #{usertbCellphone,jdbcType=VARCHAR}, #{usertbQq,jdbcType=VARCHAR}, #{usertbWeixin,jdbcType=VARCHAR}, 
+      #{usertbEmail,jdbcType=VARCHAR}, #{usertbHeadpic,jdbcType=VARCHAR}, #{usertbSex,jdbcType=CHAR}, 
+      #{usertbStatus,jdbcType=INTEGER}, #{usertbRegtime,jdbcType=TIMESTAMP}, #{alternative1,jdbcType=VARCHAR}, 
+      #{alternative2,jdbcType=VARCHAR}, #{alternative3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.User" >
+    insert into usertb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usertbId != null" >
+        usertb_id,
+      </if>
+      <if test="usertbName != null" >
+        usertb_name,
+      </if>
+      <if test="usertbPassword != null" >
+        usertb_password,
+      </if>
+      <if test="usertbCellphone != null" >
+        usertb_cellphone,
+      </if>
+      <if test="usertbQq != null" >
+        usertb_qq,
+      </if>
+      <if test="usertbWeixin != null" >
+        usertb_weixin,
+      </if>
+      <if test="usertbEmail != null" >
+        usertb_email,
+      </if>
+      <if test="usertbHeadpic != null" >
+        usertb_headpic,
+      </if>
+      <if test="usertbSex != null" >
+        usertb_sex,
+      </if>
+      <if test="usertbStatus != null" >
+        usertb_status,
+      </if>
+      <if test="usertbRegtime != null" >
+        usertb_regtime,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usertbId != null" >
+        #{usertbId,jdbcType=INTEGER},
+      </if>
+      <if test="usertbName != null" >
+        #{usertbName,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbPassword != null" >
+        #{usertbPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbCellphone != null" >
+        #{usertbCellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbQq != null" >
+        #{usertbQq,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbWeixin != null" >
+        #{usertbWeixin,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbEmail != null" >
+        #{usertbEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbHeadpic != null" >
+        #{usertbHeadpic,jdbcType=VARCHAR},
+      </if>
+      <if test="usertbSex != null" >
+        #{usertbSex,jdbcType=CHAR},
+      </if>
+      <if test="usertbStatus != null" >
+        #{usertbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="usertbRegtime != null" >
+        #{usertbRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	<insert id="addUser" parameterType="User">
+		insert into usertb
+		(usertb_name ,usertb_password
+		,usertb_status,usertb_email,usertb_regtime)
+		values
+		(#{usertbName},#{usertbPassword},0,#{usertbEmail},now());
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.User">
+		update usertb
+		<set>
+			<if test="usertbName != null">
+				usertb_name = #{usertbName,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbPassword != null">
+				usertb_password = #{usertbPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbCellphone != null">
+				usertb_cellphone = #{usertbCellphone,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbQq != null">
+				usertb_qq = #{usertbQq,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbWeixin != null">
+				usertb_weixin = #{usertbWeixin,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbEmail != null">
+				usertb_email = #{usertbEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbHeadpic != null">
+				usertb_headpic = #{usertbHeadpic,jdbcType=VARCHAR},
+			</if>
+			<if test="usertbSex != null">
+				usertb_sex = #{usertbSex,jdbcType=CHAR},
+			</if>
+			<if test="usertbStatus != null">
+				usertb_status = #{usertbStatus,jdbcType=INTEGER},
+			</if>
+			<if test="usertbRegtime != null">
+				usertb_regtime = #{usertbRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alternative1 != null">
+				alternative1 = #{alternative1,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative2 != null">
+				alternative2 = #{alternative2,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative3 != null">
+				alternative3 = #{alternative3,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where usertb_id = #{usertbId,jdbcType=INTEGER}
+	</update>
+	<update id="updatePwd" parameterType="User">
+			update usertb set usertb_password=#{usertbPassword} where usertb_id=#{usertbId}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.User">
+		update usertb
+		set usertb_name = #{usertbName,jdbcType=VARCHAR},
+		usertb_password = #{usertbPassword,jdbcType=VARCHAR},
+		usertb_cellphone = #{usertbCellphone,jdbcType=VARCHAR},
+		usertb_qq = #{usertbQq,jdbcType=VARCHAR},
+		usertb_weixin = #{usertbWeixin,jdbcType=VARCHAR},
+		usertb_email = #{usertbEmail,jdbcType=VARCHAR},
+		usertb_headpic = #{usertbHeadpic,jdbcType=VARCHAR},
+		usertb_sex = #{usertbSex,jdbcType=CHAR},
+		usertb_status = #{usertbStatus,jdbcType=INTEGER},
+		usertb_regtime = #{usertbRegtime,jdbcType=TIMESTAMP},
+		alternative1 = #{alternative1,jdbcType=VARCHAR},
+		alternative2 = #{alternative2,jdbcType=VARCHAR},
+		alternative3 = #{alternative3,jdbcType=VARCHAR}
+		where usertb_id = #{usertbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateInfo" parameterType="User">
+			update usertb set 
+			<if test="#{usertbName}!=null">usertb_name=#{usertbName},</if>
+			<if test="#{usertbCellphone}!=null">usertb_cellphone=#{usertbCellphone},</if>
+			 <if test="#{usertbEmail}!=null">usertb_email=#{usertbEmail},</if>
+			 <if test="#{usertbHeadpic}!=null">usertb_headpic=#{usertbHeadpic},</if>
+			 <if test="#{usertbSex}!=null">usertb_sex=#{usertbSex}</if>
+			where usertb_id=#{usertbId}
+	</update>
+
+</mapper>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkpriceMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Workprice">
+		<id column="workpricetb_id" property="workpricetbId" jdbcType="INTEGER" />
+		<result column="workertypetb_id" property="workertypetbId"
+			jdbcType="INTEGER" />
+		<result column="workertypetb_name" property="workertypetbName"
+			jdbcType="VARCHAR" />
+
+		<result column="workpricetb_name" property="workpricetbName"
+			jdbcType="VARCHAR" />
+		<result column="workpricetb_priceone" property="workpricetbPriceone"
+			jdbcType="VARCHAR" />
+		<result column="workpricetb_pricetwo" property="workpricetbPricetwo"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		workpricetb_id, workertypetb_id, workpricetb_name,
+		workpricetb_priceone,
+		workpricetb_pricetwo
+	</sql>
+	<select id="getCount" resultType="int">
+		select count(*) from
+		workpricetb
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from workpricetb
+		where workpricetb_id =
+		#{workpricetbId,jdbcType=INTEGER}
+	</select>
+	<select id="selectByQueryStr" resultMap="BaseResultMap">
+		select
+		*
+		from workpricetb a left join workertypetb b on
+		a.workertypetb_id=b.workertypetb_id
+		where 1=1
+		<if test="queryStr!=null">
+			and (workpricetb_name like '%${queryStr}%' or
+			workertypetb_name like
+			'%${queryStr}%' )
+		</if>
+
+	</select>
+	<select id="selectByPaginarion" resultMap="BaseResultMap">
+		select
+		*
+		from workpricetb a left join workertypetb b on
+		a.workertypetb_id=b.workertypetb_id
+		where 1=1
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		workpricetb
+		where workpricetb_id = #{workpricetbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.Workprice">
+		insert into workpricetb (workpricetb_id, workertypetb_id,
+		workpricetb_name,
+		workpricetb_priceone, workpricetb_pricetwo,
+		alternative1, alternative2, alternative3
+		)
+		values (#{workpricetbId,jdbcType=INTEGER},
+		#{workertypetbId,jdbcType=INTEGER},
+		#{workpricetbName,jdbcType=VARCHAR},
+		#{workpricetbPriceone,jdbcType=VARCHAR},
+		#{workpricetbPricetwo,jdbcType=VARCHAR},
+		#{alternative1,jdbcType=VARCHAR}, #{alternative2,jdbcType=VARCHAR},
+		#{alternative3,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.craftsman.ssm.entity.Workprice">
+		insert into workpricetb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="workpricetbId != null">
+				workpricetb_id,
+			</if>
+			<if test="workertypetbId != null">
+				workertypetb_id,
+			</if>
+			<if test="workpricetbName != null">
+				workpricetb_name,
+			</if>
+			<if test="workpricetbPriceone != null">
+				workpricetb_priceone,
+			</if>
+			<if test="workpricetbPricetwo != null">
+				workpricetb_pricetwo,
+			</if>
+			<if test="alternative1 != null">
+				alternative1,
+			</if>
+			<if test="alternative2 != null">
+				alternative2,
+			</if>
+			<if test="alternative3 != null">
+				alternative3,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="workpricetbId != null">
+				#{workpricetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertypetbId != null">
+				#{workertypetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workpricetbName != null">
+				#{workpricetbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workpricetbPriceone != null">
+				#{workpricetbPriceone,jdbcType=VARCHAR},
+			</if>
+			<if test="workpricetbPricetwo != null">
+				#{workpricetbPricetwo,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative1 != null">
+				#{alternative1,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative2 != null">
+				#{alternative2,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative3 != null">
+				#{alternative3,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Workprice">
+		update workpricetb
+		<set>
+			<if test="workertypetbId != null">
+				workertypetb_id = #{workertypetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workpricetbName != null">
+				workpricetb_name = #{workpricetbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workpricetbPriceone != null">
+				workpricetb_priceone = #{workpricetbPriceone,jdbcType=VARCHAR},
+			</if>
+			<if test="workpricetbPricetwo != null">
+				workpricetb_pricetwo = #{workpricetbPricetwo,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative1 != null">
+				alternative1 = #{alternative1,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative2 != null">
+				alternative2 = #{alternative2,jdbcType=VARCHAR},
+			</if>
+			<if test="alternative3 != null">
+				alternative3 = #{alternative3,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where workpricetb_id = #{workpricetbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.Workprice">
+		update workpricetb
+		set workertypetb_id = #{workertypetbId,jdbcType=INTEGER},
+		workpricetb_name = #{workpricetbName,jdbcType=VARCHAR},
+		workpricetb_priceone = #{workpricetbPriceone,jdbcType=VARCHAR},
+		workpricetb_pricetwo = #{workpricetbPricetwo,jdbcType=VARCHAR},
+		alternative1 = #{alternative1,jdbcType=VARCHAR},
+		alternative2 = #{alternative2,jdbcType=VARCHAR},
+		alternative3 = #{alternative3,jdbcType=VARCHAR}
+		where workpricetb_id = #{workpricetbId,jdbcType=INTEGER}
+	</update>
+</mapper>

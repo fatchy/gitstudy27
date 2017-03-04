@@ -1,0 +1,6 @@
+@charset "utf-8";
+.laborDetail{ background-color: #F7F7F7 !important; margin-top:20px !important; padding:15px !important;}
+
+.formMarginTop{margin-top:20px !important;padding-top:15px !important;}
+
+#bespeakDistrict,#bespeakStreet{height:35px !important; }

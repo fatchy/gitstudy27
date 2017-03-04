@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.Order">
+		<id column="ordertb_id" property="ordertbId" jdbcType="INTEGER" />
+		<result column="usertb_id" property="usertbId" jdbcType="INTEGER" />
+		<result column="usertb_name" property="usertbName" jdbcType="VARCHAR" />
+		<result column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+		<result column="workertb_name" property="workertbName"
+			jdbcType="VARCHAR" />
+		<result column="ordertb_status" property="ordertbStatus"
+			jdbcType="INTEGER" />
+		<result column="ordertb_paystatus" property="ordertbPaystatus"
+			jdbcType="INTEGER" />
+		<result column="ordertb_payment" property="ordertbPayment"
+			jdbcType="INTEGER" />
+		<result column="ordertb_evalstate" property="ordertbEvalstate"
+			jdbcType="INTEGER" />
+		<result column="ordertb_money" property="ordertbMoney"
+			jdbcType="DOUBLE" />
+		<result column="ordertb_starttime" property="ordertbStarttime"
+			jdbcType="TIMESTAMP" />
+		<result column="ordertb_endtime" property="ordertbEndtime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ordertb_id, usertb_id,workertb_id,
+		ordertb_status,ordertb_paystatus,
+		ordertb_payment,
+		ordertb_evalstate,
+		ordertb_money,
+		ordertb_starttime,
+		ordertb_endtime,usertb_name,workertb_name
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		*
+		from ordertb ta
+		left join workertb tb on
+		ta.workertb_id=tb.workertb_id
+		left join usertb tc
+		on
+		ta.usertb_id=tc.usertb_id
+		where ordertb_id =
+		#{ordertbId,jdbcType=INTEGER}
+	</select>
+
+	<resultMap type="com.craftsman.ssm.entity.OrderInfo" id="OrderInfoResultMap">
+
+		<id column="ordertb_id" property="ordertbId" jdbcType="INTEGER" />
+		<result column="usertb_id" property="usertbId" jdbcType="INTEGER" />
+		<result column="usertb_name" property="usertbName" jdbcType="VARCHAR" />
+		<result column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+		<result column="workertb_name" property="workertbName"
+			jdbcType="VARCHAR" />
+		<result column="ordertb_status" property="ordertbStatus"
+			jdbcType="INTEGER" />
+		<result column="ordertb_paystatus" property="ordertbPaystatus"
+			jdbcType="INTEGER" />
+		<result column="ordertb_payment" property="ordertbPayment"
+			jdbcType="INTEGER" />
+		<result column="ordertb_evalstate" property="ordertbEvalstate"
+			jdbcType="INTEGER" />
+		<result column="ordertb_money" property="ordertbMoney"
+			jdbcType="DOUBLE" />
+		<result column="ordertb_starttime" property="ordertbStarttime"
+			jdbcType="TIMESTAMP" />
+		<result column="ordertb_endtime" property="ordertbEndtime"
+			jdbcType="TIMESTAMP" />
+		<association property="worker" javaType="com.craftsman.ssm.entity.Worker"
+			resultMap="com.craftsman.ssm.mapper.WorkerMapper.BaseResultMap" />
+
+	</resultMap>
+
+	<select id="selectByUserId" resultMap="OrderInfoResultMap"
+		parameterType="java.lang.Integer">
+		select * from ordertb ta left join workertb tb on
+		ta.workertb_id=tb.workertb_id
+		where usertb_id =#{usertbId}
+	</select>
+
+
+	<select id="getCount" resultType="int">
+		select
+		count(*)
+		from ordertb
+	</select>
+
+	<select id="selectByPagination" resultMap="BaseResultMap">
+		select
+		*
+		from ordertb ta
+		left join workertb tb on
+		ta.workertb_id=tb.workertb_id
+		left join usertb tc
+		on
+		ta.usertb_id=tc.usertb_id
+		where 1=1
+		<if test="order!=null and sort!=null">order by #{sort} #{order}</if>
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+
+
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update ordertb
+		set
+		ordertb_status =7 where ordertb_id = #{ordertbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.Order"
+		useGeneratedKeys="true" keyProperty="ordertbId">
+		insert into ordertb (ordertb_id,
+		usertb_id, workertb_id,
+		ordertb_status, ordertb_payment, ordertb_money,
+		ordertb_starttime, ordertb_endtime)
+		values
+		(#{ordertbId,jdbcType=INTEGER}, #{usertbId,jdbcType=INTEGER},
+		#{workertbId,jdbcType=INTEGER},
+		#{ordertbStatus,jdbcType=INTEGER},
+		#{ordertbPayment,jdbcType=INTEGER}, #{ordertbMoney,jdbcType=DOUBLE},
+		now(), #{ordertbEndtime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="quickorder" parameterType="com.craftsman.ssm.entity.Order" useGeneratedKeys="true" keyProperty="ordertbId">
+    insert into ordertb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     <!--  <if test="ordertbId != null" >
+        ordertb_id,
+      </if> -->
+      <if test="usertbId != null" >
+        usertb_id,
+      </if>
+      <if test="workertbId != null" >
+        workertb_id,
+      </if>
+      <if test="ordertbStatus != null" >
+        ordertb_status,
+      </if>
+      <if test="ordertbPayment != null" >
+        ordertb_payment,
+      </if>
+      <if test="ordertbMoney != null" >
+        ordertb_money,
+      </if>
+        ordertb_starttime,
+      
+      <if test="ordertbEndtime != null" >
+        ordertb_endtime,
+      </if>
+     
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     <!--  <if test="ordertbId != null" >
+        #{ordertbId,jdbcType=INTEGER},
+      </if> -->
+      <if test="usertbId != null" >
+        #{usertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workertbId != null" >
+        #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbStatus != null" >
+        #{ordertbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbPayment != null" >
+        #{ordertbPayment,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbMoney != null" >
+        #{ordertbMoney,jdbcType=DOUBLE},
+      </if>
+        now(),
+      <if test="ordertbEndtime != null" >
+        #{ordertbEndtime,jdbcType=TIMESTAMP},
+      </if>
+    
+    </trim>
+  </insert>
+	<!-- 更新订单的评论状态 -->
+  <update id="updateOrderevaluationState" parameterType="com.craftsman.ssm.entity.Order" >
+    update ordertb
+    <set >
+      <if test="usertbId != null" >
+        usertb_id = #{usertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workertbId != null" >
+        workertb_id = #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbStatus != null" >
+        ordertb_status = #{ordertbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbPayment != null" >
+        ordertb_payment = #{ordertbPayment,jdbcType=INTEGER},
+      </if>
+      <if test="ordertbMoney != null" >
+        ordertb_money = #{ordertbMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="ordertbStarttime != null" >
+        ordertb_starttime = #{ordertbStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordertbEndtime != null" >
+        ordertb_endtime = #{ordertbEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordertbEvalstate != null">
+      	ordertb_evalstate = #{ordertbEvalstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ordertb_id = #{ordertbId,jdbcType=INTEGER}
+  </update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.Order">
+		update ordertb
+		<set>
+			<if test="usertbId != null">
+				usertb_id = #{usertbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertbId != null">
+				workertb_id = #{workertbId,jdbcType=INTEGER},
+			</if>
+			<if test="ordertbStatus != null">
+				ordertb_status = #{ordertbStatus,jdbcType=INTEGER},
+			</if>
+			<if test="ordertbPayment != null">
+				ordertb_payment = #{ordertbPayment,jdbcType=INTEGER},
+			</if>
+			<if test="ordertbMoney != null">
+				ordertb_money = #{ordertbMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="ordertbStarttime != null">
+				ordertb_starttime =
+				#{ordertbStarttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ordertbEndtime != null">
+				ordertb_endtime = #{ordertbEndtime,jdbcType=TIMESTAMP},
+			</if>
+
+		</set>
+		where ordertb_id = #{ordertbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.Order">
+		update ordertb
+		set
+		usertb_id = #{usertbId,jdbcType=INTEGER},
+		workertb_id =
+		#{workertbId,jdbcType=INTEGER},
+		ordertb_status =
+		#{ordertbStatus,jdbcType=INTEGER},
+		ordertb_payment =
+		#{ordertbPayment,jdbcType=INTEGER},
+		ordertb_money =
+		#{ordertbMoney,jdbcType=DOUBLE},
+		ordertb_starttime =
+		#{ordertbStarttime,jdbcType=TIMESTAMP},
+		ordertb_endtime =
+		#{ordertbEndtime,jdbcType=TIMESTAMP}
+		where ordertb_id =
+		#{ordertbId,jdbcType=INTEGER}
+	</update>
+</mapper>

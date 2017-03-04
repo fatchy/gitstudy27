@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkerAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.WorkerAddress" >
+    <id column="workeraddresstb" property="workeraddresstb" jdbcType="INTEGER" />
+    <result column="workertb_id" property="workertbId" jdbcType="INTEGER" />
+    <result column="workeraddresstb_address" property="workeraddresstbAddress" jdbcType="VARCHAR" />
+    <result column="alternative1" property="alternative1" jdbcType="VARCHAR" />
+    <result column="alternative2" property="alternative2" jdbcType="VARCHAR" />
+    <result column="alternative3" property="alternative3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    workeraddresstb, workertb_id, workeraddresstb_address, alternative1, alternative2, 
+    alternative3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from workeraddresstb
+    where workeraddresstb = #{workeraddresstb,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workeraddresstb
+    where workeraddresstb = #{workeraddresstb,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.craftsman.ssm.entity.WorkerAddress" >
+    insert into workeraddresstb (workeraddresstb, workertb_id, workeraddresstb_address, 
+      alternative1, alternative2, alternative3
+      )
+    values (#{workeraddresstb,jdbcType=INTEGER}, #{workertbId,jdbcType=INTEGER}, #{workeraddresstbAddress,jdbcType=VARCHAR}, 
+      #{alternative1,jdbcType=VARCHAR}, #{alternative2,jdbcType=VARCHAR}, #{alternative3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.craftsman.ssm.entity.WorkerAddress" >
+    insert into workeraddresstb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workeraddresstb != null" >
+        workeraddresstb,
+      </if>
+      <if test="workertbId != null" >
+        workertb_id,
+      </if>
+      <if test="workeraddresstbAddress != null" >
+        workeraddresstb_address,
+      </if>
+      <if test="alternative1 != null" >
+        alternative1,
+      </if>
+      <if test="alternative2 != null" >
+        alternative2,
+      </if>
+      <if test="alternative3 != null" >
+        alternative3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workeraddresstb != null" >
+        #{workeraddresstb,jdbcType=INTEGER},
+      </if>
+      <if test="workertbId != null" >
+        #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workeraddresstbAddress != null" >
+        #{workeraddresstbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.WorkerAddress" >
+    update workeraddresstb
+    <set >
+      <if test="workertbId != null" >
+        workertb_id = #{workertbId,jdbcType=INTEGER},
+      </if>
+      <if test="workeraddresstbAddress != null" >
+        workeraddresstb_address = #{workeraddresstbAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative1 != null" >
+        alternative1 = #{alternative1,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative2 != null" >
+        alternative2 = #{alternative2,jdbcType=VARCHAR},
+      </if>
+      <if test="alternative3 != null" >
+        alternative3 = #{alternative3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where workeraddresstb = #{workeraddresstb,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.WorkerAddress" >
+    update workeraddresstb
+    set workertb_id = #{workertbId,jdbcType=INTEGER},
+      workeraddresstb_address = #{workeraddresstbAddress,jdbcType=VARCHAR},
+      alternative1 = #{alternative1,jdbcType=VARCHAR},
+      alternative2 = #{alternative2,jdbcType=VARCHAR},
+      alternative3 = #{alternative3,jdbcType=VARCHAR}
+    where workeraddresstb = #{workeraddresstb,jdbcType=INTEGER}
+  </update>
+</mapper>

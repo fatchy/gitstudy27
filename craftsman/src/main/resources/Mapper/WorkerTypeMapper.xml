@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.craftsman.ssm.mapper.WorkerTypeMapper">
+	<resultMap id="BaseResultMap" type="com.craftsman.ssm.entity.WorkerType">
+		<id column="workertypetb_id" property="workertypetbId" jdbcType="INTEGER" />
+		<result column="workertypetb_name" property="workertypetbName"
+			jdbcType="VARCHAR" />
+		<result column="workertypetb_summary" property="workertypetbSummary"
+			jdbcType="VARCHAR" />
+		<result column="workertypetb_pic" property="workertypetbPic"
+			jdbcType="VARCHAR" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		workertypetb_id, workertypetb_name, workertypetb_summary,
+		workertypetb_pic
+	</sql>
+	<sql id="Id_name_List">
+		workertypetb_id, workertypetb_name
+	</sql>
+	<select id="findWorkerType" resultMap="BaseResultMap">
+		select * from workertypetb
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		workertypetb_id,
+		workertypetb_name
+		from workertypetb
+	</select>
+
+	<select id="getCount" resultType="int">
+		select count(*) from
+		workertypetb
+	</select>
+
+
+
+	<select id="selectByPagination" resultMap="BaseResultMap"
+		parameterType="Pagination">
+		select * from workertypetb
+		<if test="queryStr!=null">and (workertypetb_name like '%${queryStr}%' or
+			workertypetb_summary like '%${queryStr}%' or workertypetb_name like
+			'%${queryStr}%')</if>
+		<if test="min!=null and rows!=null">limit #{min},#{rows}</if>
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from workertypetb
+		where workertypetb_id =
+		#{workertypetbId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		workertypetb
+		where workertypetb_id = #{workertypetbId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.craftsman.ssm.entity.WorkerType">
+		insert into workertypetb
+		(workertypetb_id, workertypetb_name,
+		workertypetb_summary,
+		workertypetb_pic)
+		values (#{workertypetbId,jdbcType=INTEGER},
+		#{workertypetbName,jdbcType=VARCHAR},
+		#{workertypetbSummary,jdbcType=VARCHAR},
+		#{workertypetbPic,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.craftsman.ssm.entity.WorkerType">
+		insert into workertypetb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="workertypetbId != null">
+				workertypetb_id,
+			</if>
+			<if test="workertypetbName != null">
+				workertypetb_name,
+			</if>
+			<if test="workertypetbSummary != null">
+				workertypetb_summary,
+			</if>
+			<if test="workertypetbPic != null">
+				workertypetb_pic,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="workertypetbId != null">
+				#{workertypetbId,jdbcType=INTEGER},
+			</if>
+			<if test="workertypetbName != null">
+				#{workertypetbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbSummary != null">
+				#{workertypetbSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbPic != null">
+				#{workertypetbPic,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.craftsman.ssm.entity.WorkerType">
+		update workertypetb
+		<set>
+			<if test="workertypetbName != null">
+				workertypetb_name = #{workertypetbName,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbSummary != null">
+				workertypetb_summary =
+				#{workertypetbSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="workertypetbPic != null">
+				workertypetb_pic = #{workertypetbPic,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where workertypetb_id = #{workertypetbId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.craftsman.ssm.entity.WorkerType">
+		update
+		workertypetb
+		set workertypetb_name =
+		#{workertypetbName,jdbcType=VARCHAR},
+		workertypetb_summary =
+		#{workertypetbSummary,jdbcType=VARCHAR},
+		workertypetb_pic =
+		#{workertypetbPic,jdbcType=VARCHAR},
+		alternative1 =
+		#{alternative1,jdbcType=VARCHAR},
+		alternative2 =
+		#{alternative2,jdbcType=VARCHAR},
+		alternative3 =
+		#{alternative3,jdbcType=VARCHAR}
+		where workertypetb_id =
+		#{workertypetbId,jdbcType=INTEGER}
+	</update>
+</mapper>
